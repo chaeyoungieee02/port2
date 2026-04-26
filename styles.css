@@ -168,16 +168,33 @@ body {
 }
 .week-details { display: grid; gap: .9rem; }
 .week-details p { color: #dbe3ef; }
-.week-steps { margin-left: 1.2rem; color: #dbe3ef; line-height: 1.7; }
+.week-label {
+  font-size: 1.08rem;
+  letter-spacing: .01em;
+}
+.week-steps {
+  margin-left: 1.2rem;
+  color: #dbe3ef;
+  line-height: 1.7;
+}
+.week-steps li + li { margin-top: .15rem; }
+.week-media {
+  display: grid;
+  gap: .9rem;
+  grid-template-columns: 1fr;
+  max-width: 860px;
+}
 .video-card {
-  background: rgba(0,0,0,.25);
-  border: 1px solid rgba(255,255,255,.16);
-  border-radius: 10px;
-  padding: .75rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 12px;
+  padding: .85rem;
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
 }
 .video-card h3 {
   font-size: 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: .55rem;
+  color: #f0f4fb;
 }
 .video-frame {
   position: relative;
@@ -194,12 +211,14 @@ body {
   height: 100%;
   border: 0;
 }
+.week-details + .pill-btn { margin-top: 1rem; }
 
 @media (max-width: 1080px) {
   .nav-wrap { grid-template-columns: 1fr; gap: .9rem; }
   .nav-links { justify-content: flex-start; flex-wrap: wrap; }
   .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 2rem; }
   .hero-right { min-height: 500px; }
+  .week-media { max-width: 100%; }
 }
 @media (max-width: 800px) { .week-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 500px) { .week-grid { grid-template-columns: 1fr; } }
