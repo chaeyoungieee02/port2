@@ -212,6 +212,89 @@ body {
   border: 0;
 }
 .week-details + .pill-btn { margin-top: 1rem; }
+.planet-desc-head {
+  color: #c5ceda;
+  margin-bottom: .85rem;
+}
+.planet-detail-switch {
+  display: grid;
+  gap: .5rem;
+  margin-bottom: .8rem;
+}
+.planet-btn {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.02);
+  color: #eaf0f8;
+  padding: .48rem .8rem;
+  cursor: pointer;
+  text-align: center;
+}
+.planet-btn:hover { background: rgba(255,255,255,.08); }
+.planet-btn.active {
+  border-color: rgba(255,255,255,.45);
+  background: rgba(255,255,255,.16);
+}
+.planet-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: .9rem 0;
+}
+.planet-selector .planet-btn {
+  width: auto;
+  min-width: 72px;
+  padding: .42rem .7rem;
+  border-radius: 999px;
+  font-size: .93rem;
+}
+.planet-panel {
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 12px;
+  background: rgba(255,255,255,.02);
+  padding: .85rem;
+}
+.planet-title-row {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: .65rem;
+}
+.planet-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  box-shadow: 0 0 16px rgba(0,0,0,.3);
+}
+.planet-title-row h2 {
+  font-size: 1.28rem;
+  margin: 0;
+}
+.planet-overview {
+  color: #dbe3ef;
+  line-height: 1.65;
+}
+.planet-detail-line {
+  margin-top: .75rem;
+  padding-top: .75rem;
+  border-top: 1px solid rgba(255,255,255,.12);
+  color: #dbe3ef;
+}
+.planet-video-wrap {
+  margin-top: .85rem;
+}
+.planet-video {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: #000;
+}
+.planet-video-note {
+  margin-top: .45rem;
+  color: #afbac8;
+  font-size: .9rem;
+}
 
 @media (max-width: 1080px) {
   .nav-wrap { grid-template-columns: 1fr; gap: .9rem; }
