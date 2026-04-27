@@ -175,13 +175,15 @@ body {
 .week-label {
   font-size: 1.08rem;
   letter-spacing: .01em;
+  font-family: "Monaco", "Courier New", monospace;
 }
 .week-steps {
   margin-left: 1.2rem;
   color: #dbe3ef;
   line-height: 1.7;
+  font-family: "Monaco", "Courier New", monospace;
 }
-.week-steps li + li { margin-top: .15rem; }
+.week-steps li + li { margin-top: .6rem; }
 .week-media {
   display: grid;
   gap: .9rem;
