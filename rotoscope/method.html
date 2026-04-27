@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rotoscope | Method</title>
+  <link rel="stylesheet" href="../styles.css?v=207" />
+  <style>
+    .method-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .method-section:last-child {
+      border-bottom: none;
+    }
+    
+    .method-section h3 {
+      color: #64ffda;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    
+    .method-section ol {
+      padding-left: 1.5rem;
+    }
+    
+    .method-section li {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+    
+    .tip {
+      background: rgba(100, 255, 218, 0.1);
+      border-left: 3px solid #64ffda;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-stars" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../index.html"><span class="brand-icon">i</span><span class="brand-text">PORTFOLIO SPACE</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li class="dropdown">
+            <button type="button" class="dropdown-toggle" aria-expanded="false">Blender ▾</button>
+            <ul class="dropdown-menu">
+              <li><a href="../blender/video.html">Video</a></li>
+              <li><a href="../blender/description.html">Description</a></li>
+              <li><a href="../blender/method.html">Method</a></li>
+              <li><a href="../blender/calculator.html">Earth Age Calculator</a></li>
+              <li><a href="../blender/script.html">Script</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="dropdown-toggle" aria-expanded="false">Rotoscope ▾</button>
+            <ul class="dropdown-menu">
+              <li><a href="live-action.html">Live Action Video</a></li>
+              <li><a href="final-video.html">Final Video</a></li>
+              <li><a href="method.html">Method</a></li>
+              <li><a href="credits.html">Disclaimer / Credits</a></li>
+              <li><a href="weekly-progress.html">Weekly Progress</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="container page-wrap">
+    <h1>Rotoscoping Method</h1>
+    <section class="f-card">
+      <p><strong>Rotoscoping in Adobe After Effects</strong> is a frame-by-frame animation technique used to track and mask elements in live-action footage. Here's a comprehensive guide to the process:</p>
+      
+      <div class="method-section">
+        <h3>1. Import and Prepare Your Footage</h3>
+        <ol>
+          <li>Import your source video file into After Effects</li>
+          <li>Create a new composition with settings matching your footage (resolution, frame rate, duration)</li>
+          <li>Drag your footage into the composition timeline</li>
+          <li>Make sure your playback settings are optimized for smooth scrubbing</li>
+          <li>Set up your workspace with the Composition panel and Effect Controls visible</li>
+        </ol>
+      </div>
+
+      <div class="method-section">
+        <h3>2. Set Up the Rotoscope Tool</h3>
+        <ol>
+          <li>Create a new shape layer above your footage layer</li>
+          <li>Select the Pen Tool (G) from the toolbar</li>
+          <li>In the Tool Options, enable "Rotoscope" mode</li>
+          <li>Choose your mask feather value (typically 1-3 pixels for smooth edges)</li>
+          <li>Set stroke and fill properties as needed for visibility</li>
+        </ol>
+        <div class="tip">
+          <strong>Tip:</strong> Use a bright stroke color (like red or green) against your footage for better visibility while rotoscoping.
+        </div>
+      </div>
+
+      <div class="method-section">
+        <h3>3. Create Your First Mask Frame</h3>
+        <ol>
+          <li>Move the playhead to the first frame where rotoscoping begins</li>
+          <li>Use the Pen Tool to carefully outline the subject you're rotoscoping</li>
+          <li>Click around the perimeter of your subject, placing anchor points at key areas</li>
+          <li>Close the path by clicking on your starting point</li>
+          <li>A keyframe is automatically created at this frame</li>
+        </ol>
+      </div>
+
+      <div class="method-section">
+        <h3>4. Frame-by-Frame Tracking</h3>
+        <ol>
+          <li>Move forward one frame (press the right arrow key)</li>
+          <li>Adjust the existing mask points to fit the subject's new position</li>
+          <li>The Roto tool automatically creates a keyframe with your adjustments</li>
+          <li>Continue this process for every frame or every few frames depending on motion speed</li>
+          <li>For fast-moving subjects, you may need to adjust more frequently</li>
+          <li>For slow motion, you can rotoscope every 2-3 frames and let After Effects interpolate</li>
+        </ol>
+        <div class="tip">
+          <strong>Tip:</strong> Use keyboard shortcuts for efficiency: Page Down (next frame), Page Up (previous frame), and Shift+Right Arrow (jump frames).
+        </div>
+      </div>
+
+      <div class="method-section">
+        <h3>5. Handle Challenging Transitions</h3>
+        <ol>
+          <li>For complex shapes or joints, add more anchor points for better control</li>
+          <li>Use feathering to blend hard edges with the background</li>
+          <li>For areas with transparency or complex shapes, adjust individual point positions carefully</li>
+          <li>When subjects rotate or change perspective, you may need to add/remove anchor points</li>
+          <li>Review your work frequently by toggling the stroke visibility</li>
+        </ol>
+      </div>
+
+      <div class="method-section">
+        <h3>6. Refine and Optimize</h3>
+        <ol>
+          <li>Review your entire rotoscoped sequence from start to finish</li>
+          <li>Look for any jittery or inconsistent movements in the mask</li>
+          <li>Go back and smooth out rough transitions between keyframes</li>
+          <li>Adjust feather and stroke settings for the final output quality</li>
+          <li>Use the "Warp Stabilizer" effect if the footage has camera shake</li>
+        </ol>
+      </div>
+
+      <div class="method-section">
+        <h3>7. Apply Effects and Compositing</h3>
+        <ol>
+          <li>Once your roto is complete, hide the stroke by setting it to 0 pixels or invisible</li>
+          <li>Convert the mask to a track matte for layering effects</li>
+          <li>Add color corrections, glows, or other effects to the masked subject</li>
+          <li>Layer additional graphics or backgrounds behind your rotoscoped element</li>
+          <li>Use blend modes to integrate your rotoscoped layer naturally</li>
+        </ol>
+      </div>
+
+      <div class="method-section">
+        <h3>8. Export Your Final Composition</h3>
+        <ol>
+          <li>Set your composition range to the desired output range</li>
+          <li>Go to Composition > Add to Render Queue</li>
+          <li>Choose your output format (ProRes for editing, H.264 for web, PNG sequence for additional processing)</li>
+          <li>Set the quality to "Best" for maximum output quality</li>
+          <li>Click Render and let After Effects process your final video</li>
+        </ol>
+      </div>
+
+      <div class="method-section">
+        <h3>Pro Tips for Better Results</h3>
+        <ol>
+          <li><strong>Work at 50% or 25% resolution</strong> during rotoscoping for better performance</li>
+          <li><strong>Use a graphics tablet</strong> for more precise and faster rotoscoping</li>
+          <li><strong>Zoom in on problem areas</strong> to ensure accurate mask placement</li>
+          <li><strong>Save frequently</strong> - rotoscoping projects can be large and time-consuming</li>
+          <li><strong>Use reference layers</strong> to compare your roto with the original footage</li>
+          <li><strong>Batch process similar shots</strong> to maintain consistency</li>
+          <li><strong>Plan your keyframe density</strong> - more frames for complex motion, fewer for simple movements</li>
+        </ol>
+      </div>
+
+      <a class="pill-btn" href="weekly-progress.html">Back to Weekly Progress</a>
+    </section>
+  </main>
+  <script src="../script.js?v=204"></script>
+</body>
+</html>
