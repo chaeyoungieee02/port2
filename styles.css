@@ -105,6 +105,111 @@ body {
 .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; }
 
 .hero-right { position: relative; min-height: 560px; }
+.home-shell {
+  position: relative;
+  z-index: 5;
+  padding: 2.4rem 0 3rem;
+}
+.home-hero {
+  text-align: center;
+  padding: 1.2rem 0 2rem;
+}
+.home-hero h1 {
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  line-height: .95;
+  margin-bottom: .75rem;
+}
+.home-hero .hero-text {
+  max-width: 62ch;
+  margin: 0 auto;
+}
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+.project-card {
+  overflow: hidden;
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  color: #1c2434;
+  box-shadow: 0 20px 40px rgba(0,0,0,.16);
+}
+.project-card-top {
+  min-height: 140px;
+  background: linear-gradient(180deg, rgba(110,106,214,.92), rgba(123,108,255,.84));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-card.project-02 .project-card-top {
+  background: linear-gradient(180deg, rgba(112,116,221,.96), rgba(122,84,186,.9));
+}
+.project-icon {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,.88);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(8px);
+}
+.project-card-body {
+  padding: 1.25rem 1.3rem 1.35rem;
+}
+.project-card-body h2 {
+  color: #4f59a6;
+  font-size: 1rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: .35rem;
+}
+.project-card-body h3 {
+  color: #17202f;
+  font-size: 1.6rem;
+  margin-bottom: .55rem;
+}
+.project-card-body p {
+  color: #404b5e;
+  line-height: 1.55;
+  margin-bottom: .95rem;
+}
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-bottom: 1rem;
+}
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.85rem;
+  padding: 0 .7rem;
+  border-radius: 999px;
+  background: #eceef5;
+  color: #3e4657;
+  font-size: .78rem;
+}
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.text-link {
+  color: #2a65d7;
+  text-decoration: none;
+  font-weight: 600;
+}
+.text-link:hover {
+  text-decoration: underline;
+}
 .page-hero {
   position: relative;
   z-index: 5;
@@ -330,6 +435,9 @@ body {
   .page-hero-panel,
   .card-grid,
   .timeline-step {
+    grid-template-columns: 1fr;
+  }
+  .project-grid {
     grid-template-columns: 1fr;
   }
   .card-grid {
