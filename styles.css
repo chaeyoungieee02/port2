@@ -377,7 +377,7 @@ body {
 }
 .progress-card {
   position: relative;
-  width: min(100%, 430px);
+  width: min(100%, 760px);
   margin: 0 auto;
   background: rgba(14,14,14,.95);
   color: #f0f3f8;
@@ -649,7 +649,8 @@ body {
   border: 1px solid rgba(255,255,255,.16);
   background: #000;
 }
-.planet-video-note {
+.planet-video-note,
+.progress-card small {
   display: block;
   max-width: 720px;
   margin: 1rem auto 0;
