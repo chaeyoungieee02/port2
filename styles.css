@@ -241,6 +241,78 @@ body {
   border-color: rgba(255,255,255,.24);
 }
 
+.progress-wrap {
+  position: relative;
+  margin-top: 1rem;
+}
+.progress-wrap::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(123, 108, 255, 0.45);
+}
+.progress-list {
+  display: grid;
+  gap: 1rem;
+}
+.progress-card {
+  position: relative;
+  width: min(100%, 860px);
+  margin: 0 auto;
+  background: rgba(255,255,255,.96);
+  color: #1f2430;
+  border-radius: 14px;
+  padding: 1rem 1rem 1.1rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+.progress-card::before {
+  content: attr(data-week);
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 4.2rem;
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7b6cff, #6c59e6);
+  color: #fff;
+  text-align: center;
+  font-size: .82rem;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(108,89,230,.22);
+}
+.progress-card h3 {
+  font-size: 1rem;
+  margin-bottom: .45rem;
+  color: #1c2536;
+}
+.progress-card p {
+  color: #3f4a5d;
+  line-height: 1.55;
+}
+.progress-card small {
+  display: block;
+  color: #6a7486;
+  margin-top: .55rem;
+}
+.progress-card.featured {
+  padding-bottom: .9rem;
+}
+.progress-card.featured p {
+  margin-bottom: .8rem;
+}
+.progress-card.compact {
+  min-height: 110px;
+}
+.progress-empty {
+  color: #6a7486;
+  font-style: italic;
+}
+
 @media (max-width: 900px) {
   .page-hero-panel,
   .card-grid,
