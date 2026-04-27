@@ -167,36 +167,25 @@
       <article class="mini-card feature-panel calculator-card">
         <div class="calculator-head">
           <h3>Earth Age Calculator</h3>
-          <p>Enter your age in Earth years to compare how that age translates across the solar system. Choose a focus planet to see your age in that planet’s own time units.</p>
+          <p>Enter your age in Earth years to compare how that age translates across the solar system. The calculator always uses Earth as the reference planet and shows Earth video playback.</p>
         </div>
         <div class="calculator-panel">
           <div class="calculator-left">
             <div class="calculator-preview">
               <div class="preview-header">
-                <span>Age Calculator Block</span>
+                <span>Earth Video</span>
                 <span class="preview-pill">Live preview</span>
               </div>
               <div class="preview-stage">
-                <div class="preview-ring"></div>
-                <div class="preview-planet"></div>
-                <div class="preview-dot"></div>
+                <video class="calculator-video" controls autoplay loop muted playsinline>
+                  <source src="videos/earth.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
             <div class="calculator-form">
               <label class="input-label" for="age">Earth age</label>
               <input id="age" type="number" min="0" value="18" placeholder="18" />
-              <label class="input-label" for="focusPlanet">Focus planet</label>
-              <select id="focusPlanet">
-                <option>Earth</option>
-                <option>Mercury</option>
-                <option>Venus</option>
-                <option>Mars</option>
-                <option>Jupiter</option>
-                <option>Saturn</option>
-                <option>Uranus</option>
-                <option>Neptune</option>
-                <option>Pluto</option>
-              </select>
               <button id="calcBtn" class="pill-btn" type="button">Calculate age</button>
             </div>
           </div>

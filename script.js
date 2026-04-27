@@ -43,7 +43,6 @@ document.addEventListener("click", (e) => {
 // Earth Age Calculator (works only where elements exist)
 const ageInput = document.getElementById("age");
 const calcBtn = document.getElementById("calcBtn");
-const focusPlanet = document.getElementById("focusPlanet");
 const summaryAge = document.getElementById("summaryAge");
 const selectedPlanetName = document.getElementById("selectedPlanetName");
 const yearsValue = document.getElementById("yearsValue");
@@ -61,7 +60,7 @@ const planetValues = {
   Pluto: document.getElementById("plutoValue"),
 };
 
-if (ageInput && calcBtn && focusPlanet && summaryAge && selectedPlanetName && yearsValue && weeksValue && daysValue) {
+if (ageInput && calcBtn && summaryAge && selectedPlanetName && yearsValue && weeksValue && daysValue) {
   const planets = [
     { name: "Mercury", period: 0.24 },
     { name: "Venus", period: 0.62 },
@@ -102,14 +101,11 @@ if (ageInput && calcBtn && focusPlanet && summaryAge && selectedPlanetName && ye
 
     summaryAge.textContent = earthAge.toFixed(2);
     updatePlanetCards(earthAge);
-
-    const selected = planets.find((planet) => planet.name === focusPlanet.value) || planets[2];
-    const planetYears = earthAge / selected.period;
-    updateSelectedOutput(selected.name, planetYears);
+    const planetYears = earthAge / 1;
+    updateSelectedOutput("Earth", planetYears);
   }
 
   calcBtn.addEventListener("click", calculateAge);
-  focusPlanet.addEventListener("change", calculateAge);
   ageInput.addEventListener("input", () => {
     if (ageInput.value !== "") calculateAge();
   });
