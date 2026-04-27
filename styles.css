@@ -153,18 +153,22 @@ body {
   margin-top: .8rem; white-space: pre-wrap; background: rgba(0,0,0,.35);
   border: 1px solid rgba(255,255,255,.16); border-radius: 10px; padding: .8rem; color: #d9e0ec;
 }
-.week-grid { margin-top: .8rem; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .6rem; }
+.week-grid { margin-top: .8rem; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.2rem; }
 .week-btn {
   display: block;
   border: 1px solid rgba(255,255,255,.2);
   border-radius: 10px;
-  padding: .6rem;
+  padding: .8rem 1rem;
   background: rgba(255,255,255,.03);
   color: #fff;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 .week-btn:hover {
   background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255,255,255,.08);
 }
 .week-details { display: grid; gap: .9rem; }
 .week-details p { color: #dbe3ef; }
