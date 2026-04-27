@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 01 | Blender: Solar System</title>
+  <link rel="stylesheet" href="styles.css?v=209" />
+</head>
+<body>
+  <div class="bg-stars" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-icon">i</span>
+        <span class="brand-text">PORTFOLIO SPACE</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a class="active" href="project-01.html">Project 01</a></li>
+          <li><a href="project-02.html">Project 02</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-wrap">
+    <section class="section-head">
+      <p class="eyebrow">Project 01</p>
+      <h2>Blender: Solar System</h2>
+      <p>
+        This page contains the full Blender project info in one place, including video links,
+        description, method, calculator, and script section.
+      </p>
+    </section>
+
+    <section class="card-grid">
+      <article class="mini-card feature-panel">
+        <h3>Video</h3>
+        <p>Open each planet page below.</p>
+        <div class="week-grid">
+          <a class="week-btn" href="blender/mercury.html">Mercury</a>
+          <a class="week-btn" href="blender/venus.html">Venus</a>
+          <a class="week-btn" href="blender/earth.html">Earth</a>
+          <a class="week-btn" href="blender/mars.html">Mars</a>
+          <a class="week-btn" href="blender/jupiter.html">Jupiter</a>
+          <a class="week-btn" href="blender/saturn.html">Saturn</a>
+          <a class="week-btn" href="blender/uranus.html">Uranus</a>
+          <a class="week-btn" href="blender/neptune.html">Neptune</a>
+          <a class="week-btn" href="blender/pluto.html">Pluto</a>
+        </div>
+      </article>
+
+      <article class="mini-card feature-panel">
+        <h3>Description</h3>
+        <p>
+          This project explores a 3D solar system animation built in Blender. It combines modeling,
+          animation, and scene composition to present planets in a clear visual sequence.
+        </p>
+      </article>
+
+      <article class="mini-card feature-panel">
+        <h3>Method</h3>
+        <ol>
+          <li>Set up scene scale and references.</li>
+          <li>Create planets and materials.</li>
+          <li>Animate camera and orbit paths.</li>
+          <li>Light, render, and export.</li>
+        </ol>
+      </article>
+
+      <article class="mini-card feature-panel">
+        <h3>Earth Age Calculator</h3>
+        <p>Estimate your age on different planets.</p>
+        <div class="calculator-row">
+          <input id="age" type="number" min="0" placeholder="Enter your age" />
+          <button id="calcBtn" class="pill-btn" type="button">Calculate</button>
+        </div>
+        <pre id="result" class="result-box">Your age on other planets will appear here.</pre>
+      </article>
+
+      <article class="mini-card feature-panel">
+        <h3>Script</h3>
+        <pre class="result-box">Paste your narration script here.</pre>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js?v=205"></script>
+</body>
+</html>
