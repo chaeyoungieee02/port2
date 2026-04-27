@@ -106,8 +106,10 @@ if (ageInput && calcBtn && summaryAge && selectedPlanetName && yearsValue && wee
   }
 
   calcBtn.addEventListener("click", calculateAge);
+  calcBtn.onclick = calculateAge;
   ageInput.addEventListener("input", () => {
     if (ageInput.value !== "") calculateAge();
   });
+  ageInput.addEventListener("change", calculateAge);
   calculateAge();
 }
