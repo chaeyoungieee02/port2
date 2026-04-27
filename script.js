@@ -1,11 +1,9 @@
 const currentPath = window.location.pathname.replace(/\\/g, "/");
 const isProjectPage = currentPath.includes("/blender/") || currentPath.includes("/rotoscope/");
-const isRootHome = currentPath.endsWith("/index.html") && !isProjectPage;
+const isDirectVisit = !document.referrer || !document.referrer.includes(window.location.host);
 
-if (isRootHome) {
-  sessionStorage.setItem("portfolio-space-home-visited", "true");
-} else if (sessionStorage.getItem("portfolio-space-home-visited") !== "true") {
-  window.location.replace(isProjectPage ? "../index.html" : "index.html");
+if (isProjectPage && isDirectVisit) {
+  window.location.replace("../index.html");
 }
 
 // Dropdown mobile toggle
