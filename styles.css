@@ -649,14 +649,15 @@ body {
   border: 1px solid rgba(255,255,255,.16);
   background: #000;
 }
-.planet-video-note,
+p.planet-video-note,
+.feature-panel .planet-video-note,
 .progress-card small {
   display: block;
   max-width: 720px;
   margin: 1rem auto 0;
   padding: 1rem 1.1rem;
   background: #ffe566;
-  color: #000;
+  color: #000 !important;
   border-radius: 16px;
   text-align: center;
   font-size: .95rem;
