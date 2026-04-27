@@ -1,3 +1,13 @@
+const currentPath = window.location.pathname.replace(/\\/g, "/");
+const isProjectPage = currentPath.includes("/blender/") || currentPath.includes("/rotoscope/");
+const isRootHome = currentPath.endsWith("/index.html") && !isProjectPage;
+
+if (isRootHome) {
+  sessionStorage.setItem("portfolio-space-home-visited", "true");
+} else if (sessionStorage.getItem("portfolio-space-home-visited") !== "true") {
+  window.location.replace(isProjectPage ? "../index.html" : "index.html");
+}
+
 // Dropdown mobile toggle
 const dropdownButtons = document.querySelectorAll(".dropdown > .dropdown-toggle");
 
