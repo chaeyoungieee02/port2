@@ -379,9 +379,10 @@ body {
   position: relative;
   width: min(100%, 430px);
   margin: 0 auto;
-  background: rgba(255,255,255,.96);
-  color: #1f2430;
+  background: rgba(14,14,14,.95);
+  color: #f0f3f8;
   border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.16);
   padding: .9rem .95rem 1rem;
   box-shadow: 0 12px 30px rgba(0,0,0,.12);
 }
@@ -404,16 +405,16 @@ body {
 .progress-card h3 {
   font-size: .95rem;
   margin-bottom: .4rem;
-  color: #1c2536;
+  color: #f2f5fb;
 }
 .progress-card p {
-  color: #3f4a5d;
+  color: #ced6e2;
   line-height: 1.45;
   font-size: .9rem;
 }
 .progress-card small {
   display: block;
-  color: #6a7486;
+  color: #b8c2d1;
   margin-top: .45rem;
   font-size: .82rem;
 }
@@ -427,7 +428,7 @@ body {
   min-height: 84px;
 }
 .progress-empty {
-  color: #6a7486;
+  color: #bcc6d4;
   font-style: italic;
 }
 
