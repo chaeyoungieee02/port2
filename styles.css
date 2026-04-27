@@ -374,7 +374,7 @@ body {
   padding: 1rem;
   display: grid;
   gap: 1rem;
-  min-height: 320px;
+  min-height: 220px;
 }
 .preview-header {
   display: flex;
@@ -395,7 +395,7 @@ body {
 .preview-stage {
   position: relative;
   width: 100%;
-  padding-top: 56.25%;
+  padding-top: 45%;
   background: radial-gradient(circle at top left, rgba(255,255,255,.08), transparent 38%), radial-gradient(circle at 80% 20%, rgba(255,255,255,.06), transparent 12%), linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
   border-radius: 18px;
   overflow: hidden;
@@ -451,7 +451,7 @@ body {
 .calculator-form input,
 .calculator-form select {
   width: 100%;
-  padding: .95rem 1rem;
+  padding: .6rem 1rem;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.03);
