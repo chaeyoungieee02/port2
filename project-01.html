@@ -164,14 +164,77 @@
         </div>
       </article>
 
-      <article class="mini-card feature-panel">
-        <h3>Earth Age Calculator</h3>
-        <p>Estimate your age on different planets.</p>
-        <div class="calculator-row">
-          <input id="age" type="number" min="0" placeholder="Enter your age" />
-          <button id="calcBtn" class="pill-btn" type="button">Calculate</button>
+      <article class="mini-card feature-panel calculator-card">
+        <div class="calculator-head">
+          <h3>Earth Age Calculator</h3>
+          <p>Enter your age in Earth years to compare how that age translates across the solar system. Choose a focus planet to see your age in that planet’s own time units.</p>
         </div>
-        <pre id="result" class="result-box">Your age on other planets will appear here.</pre>
+        <div class="calculator-panel">
+          <div class="calculator-left">
+            <div class="calculator-preview">
+              <div class="preview-header">
+                <span>Age Calculator Block</span>
+                <span class="preview-pill">Live preview</span>
+              </div>
+              <div class="preview-stage">
+                <div class="preview-ring"></div>
+                <div class="preview-planet"></div>
+                <div class="preview-dot"></div>
+              </div>
+            </div>
+            <div class="calculator-form">
+              <label class="input-label" for="age">Earth age</label>
+              <input id="age" type="number" min="0" value="18" placeholder="18" />
+              <label class="input-label" for="focusPlanet">Focus planet</label>
+              <select id="focusPlanet">
+                <option>Earth</option>
+                <option>Mercury</option>
+                <option>Venus</option>
+                <option>Mars</option>
+                <option>Jupiter</option>
+                <option>Saturn</option>
+                <option>Uranus</option>
+                <option>Neptune</option>
+                <option>Pluto</option>
+              </select>
+              <button id="calcBtn" class="pill-btn" type="button">Calculate age</button>
+            </div>
+          </div>
+
+          <div class="calculator-right">
+            <div class="calculator-summary-text">
+              <p>At <strong><span id="summaryAge">18.00</span> Earth years</strong>, your age appears younger on fast-orbit planets and older on slow-orbit planets.</p>
+            </div>
+            <div class="planet-results-grid" id="planetResultsGrid">
+              <div class="planet-result-card"><h4>Mercury</h4><p><span id="mercuryValue">74.74</span> years</p></div>
+              <div class="planet-result-card"><h4>Venus</h4><p><span id="venusValue">29.26</span> years</p></div>
+              <div class="planet-result-card"><h4>Earth</h4><p><span id="earthValue">18.00</span> years</p></div>
+              <div class="planet-result-card"><h4>Mars</h4><p><span id="marsValue">9.57</span> years</p></div>
+              <div class="planet-result-card"><h4>Jupiter</h4><p><span id="jupiterValue">1.52</span> years</p></div>
+              <div class="planet-result-card"><h4>Saturn</h4><p><span id="saturnValue">0.61</span> years</p></div>
+              <div class="planet-result-card"><h4>Uranus</h4><p><span id="uranusValue">0.21</span> years</p></div>
+              <div class="planet-result-card"><h4>Neptune</h4><p><span id="neptuneValue">0.11</span> years</p></div>
+              <div class="planet-result-card"><h4>Pluto</h4><p><span id="plutoValue">0.07</span> years</p></div>
+            </div>
+            <div class="calculator-output">
+              <h4>Age on <span id="selectedPlanetName">Earth</span></h4>
+              <div class="calculator-value-grid">
+                <div class="calculator-value-card">
+                  <span id="yearsValue">18.00</span>
+                  <small>Years</small>
+                </div>
+                <div class="calculator-value-card">
+                  <span id="weeksValue">936</span>
+                  <small>Weeks</small>
+                </div>
+                <div class="calculator-value-card">
+                  <span id="daysValue">6570</span>
+                  <small>Days</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
 
       <article class="mini-card feature-panel">

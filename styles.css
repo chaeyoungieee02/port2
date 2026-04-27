@@ -356,6 +356,178 @@ body {
   border-color: rgba(255,255,255,.24);
 }
 
+.calculator-card .calculator-panel {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+.calculator-card .calculator-left,
+.calculator-card .calculator-right {
+  display: grid;
+  gap: 1rem;
+}
+.calculator-preview {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 18px;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  min-height: 320px;
+}
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  color: #d6dbe4;
+  font-size: .95rem;
+}
+.preview-pill {
+  background: rgba(255,255,255,.08);
+  border-radius: 999px;
+  padding: .35rem .85rem;
+  color: #fff;
+  font-size: .82rem;
+  letter-spacing: .01em;
+}
+.preview-stage {
+  position: relative;
+  min-height: 180px;
+  background: radial-gradient(circle at top left, rgba(255,255,255,.08), transparent 38%), radial-gradient(circle at 80% 20%, rgba(255,255,255,.06), transparent 12%), linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border-radius: 18px;
+  overflow: hidden;
+}
+.preview-ring {
+  position: absolute;
+  inset: 1rem;
+  border: 1px dashed rgba(255,255,255,.15);
+  border-radius: 50%;
+}
+.preview-planet {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #78c7ff, #10306a);
+  top: 30%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 32px rgba(120,199,255,.25);
+}
+.preview-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  top: 43%;
+  left: 22%;
+  box-shadow: 0 0 16px rgba(255,255,255,.28);
+}
+.calculator-form {
+  display: grid;
+  gap: 1rem;
+}
+.input-label {
+  display: block;
+  color: #d6dbe4;
+  margin-bottom: .35rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.calculator-form input,
+.calculator-form select {
+  width: 100%;
+  padding: .95rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  color: #fff;
+}
+.calculator-form select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,.7) 50%), linear-gradient(135deg, rgba(255,255,255,.7) 50%, transparent 50%);
+  background-position: calc(100% - 1rem) center, calc(100% - .6rem) center;
+  background-repeat: no-repeat;
+  background-size: 8px 8px, 8px 8px;
+}
+.calculator-form .pill-btn {
+  width: 100%;
+  justify-content: center;
+  border-color: rgba(255,255,255,.46);
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+}
+.calculator-summary-text p {
+  margin: 0;
+  color: #d6dbe4;
+  line-height: 1.6;
+}
+.planet-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .9rem;
+}
+.planet-result-card {
+  padding: 1rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+}
+.planet-result-card h4 {
+  margin: 0 0 .35rem;
+  font-size: .95rem;
+  color: #f5f7fb;
+}
+.planet-result-card p {
+  margin: 0;
+  font-size: 1rem;
+  color: #d9e0ec;
+}
+.calculator-output {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 1rem;
+}
+.calculator-output h4 {
+  margin: 0;
+  margin-bottom: .8rem;
+  color: #f5f7fb;
+}
+.calculator-value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .9rem;
+}
+.calculator-value-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 1rem;
+  text-align: center;
+}
+.calculator-value-card span {
+  display: block;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #7cc8ff;
+}
+.calculator-value-card small {
+  color: #cbd5e1;
+}
+@media (max-width: 900px) {
+  .calculator-card .calculator-panel {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .planet-results-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .progress-wrap {
   position: relative;
   margin-top: 1rem;

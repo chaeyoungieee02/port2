@@ -43,26 +43,75 @@ document.addEventListener("click", (e) => {
 // Earth Age Calculator (works only where elements exist)
 const ageInput = document.getElementById("age");
 const calcBtn = document.getElementById("calcBtn");
-const result = document.getElementById("result");
+const focusPlanet = document.getElementById("focusPlanet");
+const summaryAge = document.getElementById("summaryAge");
+const selectedPlanetName = document.getElementById("selectedPlanetName");
+const yearsValue = document.getElementById("yearsValue");
+const weeksValue = document.getElementById("weeksValue");
+const daysValue = document.getElementById("daysValue");
+const planetValues = {
+  Mercury: document.getElementById("mercuryValue"),
+  Venus: document.getElementById("venusValue"),
+  Earth: document.getElementById("earthValue"),
+  Mars: document.getElementById("marsValue"),
+  Jupiter: document.getElementById("jupiterValue"),
+  Saturn: document.getElementById("saturnValue"),
+  Uranus: document.getElementById("uranusValue"),
+  Neptune: document.getElementById("neptuneValue"),
+  Pluto: document.getElementById("plutoValue"),
+};
 
-if (ageInput && calcBtn && result) {
+if (ageInput && calcBtn && focusPlanet && summaryAge && selectedPlanetName && yearsValue && weeksValue && daysValue) {
   const planets = [
     { name: "Mercury", period: 0.24 },
     { name: "Venus", period: 0.62 },
+    { name: "Earth", period: 1 },
     { name: "Mars", period: 1.88 },
     { name: "Jupiter", period: 11.86 },
     { name: "Saturn", period: 29.46 },
     { name: "Uranus", period: 84.01 },
     { name: "Neptune", period: 164.8 },
+    { name: "Pluto", period: 248 },
   ];
 
-  calcBtn.addEventListener("click", () => {
+  function updatePlanetCards(earthAge) {
+    planets.forEach((planet) => {
+      const element = planetValues[planet.name];
+      if (!element) return;
+      const planetYears = earthAge / planet.period;
+      element.textContent = planetYears.toFixed(2);
+    });
+  }
+
+  function updateSelectedOutput(planetName, planetYears) {
+    selectedPlanetName.textContent = planetName;
+    yearsValue.textContent = planetYears.toFixed(2);
+    weeksValue.textContent = Math.round(planetYears * 52.1786);
+    daysValue.textContent = Math.round(planetYears * 365.25);
+  }
+
+  function calculateAge() {
     const earthAge = parseFloat(ageInput.value);
     if (Number.isNaN(earthAge) || earthAge < 0) {
-      result.textContent = "Please enter a valid age.";
+      selectedPlanetName.textContent = "Earth";
+      yearsValue.textContent = "0.00";
+      weeksValue.textContent = "0";
+      daysValue.textContent = "0";
       return;
     }
-    const lines = planets.map((p) => `${p.name}: ${(earthAge / p.period).toFixed(2)} years`);
-    result.textContent = `Earth: ${earthAge.toFixed(2)} years\n` + lines.join("\n");
+
+    summaryAge.textContent = earthAge.toFixed(2);
+    updatePlanetCards(earthAge);
+
+    const selected = planets.find((planet) => planet.name === focusPlanet.value) || planets[2];
+    const planetYears = earthAge / selected.period;
+    updateSelectedOutput(selected.name, planetYears);
+  }
+
+  calcBtn.addEventListener("click", calculateAge);
+  focusPlanet.addEventListener("change", calculateAge);
+  ageInput.addEventListener("input", () => {
+    if (ageInput.value !== "") calculateAge();
   });
+  calculateAge();
 }
