@@ -140,7 +140,7 @@ body {
 .section-head p {
   color: #d6dbe4;
   line-height: 1.65;
-  max-width: 75ch;
+  max-width: 68ch;
 }
 .quick-links {
   display: flex;
@@ -153,24 +153,26 @@ body {
 }
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 860px);
+  justify-content: center;
   gap: 1rem;
 }
 .mini-card {
   background: rgba(16,16,16,.88);
   border: 1px solid rgba(255,255,255,.16);
-  border-radius: 16px;
-  padding: 1rem;
+  border-radius: 18px;
+  padding: 1.15rem 1.2rem;
   box-shadow: 0 12px 28px rgba(0,0,0,.22);
 }
 .mini-card h3 {
-  font-size: 1.05rem;
-  margin-bottom: .45rem;
+  font-size: 1.18rem;
+  margin-bottom: .5rem;
 }
 .mini-card p,
 .mini-card li {
   color: #d9e0ec;
-  line-height: 1.6;
+  line-height: 1.65;
+  font-size: 1rem;
 }
 .mini-card ul,
 .mini-card ol {
@@ -179,7 +181,7 @@ body {
 .feature-panel {
   background: rgba(16,16,16,.9);
   border: 1px solid rgba(255,255,255,.16);
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 1.15rem;
   box-shadow: 0 14px 30px rgba(0,0,0,.25);
 }
@@ -230,6 +232,14 @@ body {
   color: #d9e0ec;
   line-height: 1.6;
 }
+.mini-card .week-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+}
+.mini-card .quick-links .pill-btn,
+.mini-card .week-grid .week-btn {
+  min-height: 2.9rem;
+}
 .calculator-row {
   display: flex;
   flex-wrap: wrap;
@@ -257,16 +267,17 @@ body {
 }
 .progress-list {
   display: grid;
-  gap: 1rem;
+  gap: .95rem;
+  align-items: center;
 }
 .progress-card {
   position: relative;
-  width: min(100%, 860px);
+  width: min(100%, 430px);
   margin: 0 auto;
   background: rgba(255,255,255,.96);
   color: #1f2430;
   border-radius: 14px;
-  padding: 1rem 1rem 1.1rem;
+  padding: .9rem .95rem 1rem;
   box-shadow: 0 12px 30px rgba(0,0,0,.12);
 }
 .progress-card::before {
@@ -275,29 +286,31 @@ body {
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 4.2rem;
-  padding: .35rem .7rem;
+  min-width: 3.8rem;
+  padding: .28rem .6rem;
   border-radius: 999px;
   background: linear-gradient(135deg, #7b6cff, #6c59e6);
   color: #fff;
   text-align: center;
-  font-size: .82rem;
+  font-size: .78rem;
   font-weight: 700;
   box-shadow: 0 8px 18px rgba(108,89,230,.22);
 }
 .progress-card h3 {
-  font-size: 1rem;
-  margin-bottom: .45rem;
+  font-size: .95rem;
+  margin-bottom: .4rem;
   color: #1c2536;
 }
 .progress-card p {
   color: #3f4a5d;
-  line-height: 1.55;
+  line-height: 1.45;
+  font-size: .9rem;
 }
 .progress-card small {
   display: block;
   color: #6a7486;
-  margin-top: .55rem;
+  margin-top: .45rem;
+  font-size: .82rem;
 }
 .progress-card.featured {
   padding-bottom: .9rem;
@@ -306,7 +319,7 @@ body {
   margin-bottom: .8rem;
 }
 .progress-card.compact {
-  min-height: 110px;
+  min-height: 84px;
 }
 .progress-empty {
   color: #6a7486;
@@ -318,6 +331,9 @@ body {
   .card-grid,
   .timeline-step {
     grid-template-columns: 1fr;
+  }
+  .card-grid {
+    max-width: 100%;
   }
 }
 .ribbon {
