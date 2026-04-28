@@ -26,7 +26,300 @@
     <h1>Earth</h1>
     <section class="f-card">
       <h2>Script</h2>
-      <pre class="result-box">Add your script for Earth here.</pre>
+      <pre class="result-box">"""
+╔══════════════════════════════════════════════════╗
+║         EARTH — Blender 5.1 Python Script        ║
+║         v3 - Black Space + Clean Stars           ║
+╚══════════════════════════════════════════════════╝
+"""
+
+import bpy
+import math
+import random
+
+# ── RESET SCENE ─────────────────────────────────────────────────────────────
+bpy.ops.object.select_all(action='SELECT')
+bpy.ops.object.delete(use_global=False)
+for mat in bpy.data.materials:
+    bpy.data.materials.remove(mat)
+
+scene = bpy.context.scene
+scene.frame_start = 1
+scene.frame_end   = 480
+scene.render.fps  = 30
+
+bpy.context.preferences.edit.keyframe_new_interpolation_type = 'LINEAR'
+scene.render.engine = 'BLENDER_EEVEE'
+
+# ── WORLD BACKGROUND — BLACK SPACE + STARS ──────────────────────────────────
+world = bpy.data.worlds['World']
+world.use_nodes = True
+nt = world.node_tree
+nt.nodes.clear()
+
+tex_coord = nt.nodes.new('ShaderNodeTexCoord')
+tex_coord.location = (-1400, 0)
+
+mapping = nt.nodes.new('ShaderNodeMapping')
+mapping.location = (-1200, 0)
+mapping.inputs['Rotation'].default_value = (0.5, 0.3, 0.0)
+
+# --- Star layer 1: dense tiny pinpoints ---
+noise_stars = nt.nodes.new('ShaderNodeTexNoise')
+noise_stars.location = (-950, 300)
+noise_stars.inputs['Scale'].default_value      = 600.0
+noise_stars.inputs['Detail'].default_value     = 2.0
+noise_stars.inputs['Roughness'].default_value  = 1.0
+noise_stars.inputs['Distortion'].default_value = 0.0
+
+ramp_stars = nt.nodes.new('ShaderNodeValToRGB')
+ramp_stars.location = (-700, 300)
+ramp_stars.color_ramp.interpolation = 'CONSTANT'
+ramp_stars.color_ramp.elements[0].position = 0.96
+ramp_stars.color_ramp.elements[0].color    = (0.0, 0.0, 0.0, 1.0)
+ramp_stars.color_ramp.elements[1].position = 0.97
+ramp_stars.color_ramp.elements[1].color    = (1.0, 1.0, 1.0, 1.0)
+
+# --- Star layer 2: sparser brighter stars ---
+noise_stars2 = nt.nodes.new('ShaderNodeTexNoise')
+noise_stars2.location = (-950, 0)
+noise_stars2.inputs['Scale'].default_value      = 300.0
+noise_stars2.inputs['Detail'].default_value     = 2.0
+noise_stars2.inputs['Roughness'].default_value  = 1.0
+noise_stars2.inputs['Distortion'].default_value = 0.0
+
+ramp_stars2 = nt.nodes.new('ShaderNodeValToRGB')
+ramp_stars2.location = (-700, 0)
+ramp_stars2.color_ramp.interpolation = 'CONSTANT'
+ramp_stars2.color_ramp.elements[0].position = 0.97
+ramp_stars2.color_ramp.elements[0].color    = (0.0, 0.0, 0.0, 1.0)
+ramp_stars2.color_ramp.elements[1].position = 0.975
+ramp_stars2.color_ramp.elements[1].color    = (0.9, 0.95, 1.0, 1.0)
+
+# --- Milky Way nebula band (very subtle, not purple!) ---
+noise_neb = nt.nodes.new('ShaderNodeTexNoise')
+noise_neb.location = (-950, -300)
+noise_neb.inputs['Scale'].default_value      = 1.5
+noise_neb.inputs['Detail'].default_value     = 16.0
+noise_neb.inputs['Roughness'].default_value  = 0.7
+noise_neb.inputs['Distortion'].default_value = 2.0
+
+ramp_neb = nt.nodes.new('ShaderNodeValToRGB')
+ramp_neb.location = (-700, -300)
+ramp_neb.color_ramp.interpolation = 'LINEAR'
+ramp_neb.color_ramp.elements[0].position = 0.0
+ramp_neb.color_ramp.elements[0].color    = (0.0, 0.0, 0.0, 1.0)      # pure black
+ramp_neb.color_ramp.elements.new(0.45)
+ramp_neb.color_ramp.elements[1].color    = (0.0, 0.0, 0.0, 1.0)      # still black
+ramp_neb.color_ramp.elements.new(0.65)
+ramp_neb.color_ramp.elements[2].color    = (0.01, 0.02, 0.06, 1.0)   # faint blue
+ramp_neb.color_ramp.elements.new(1.0)
+ramp_neb.color_ramp.elements[3].color    = (0.03, 0.05, 0.12, 1.0)   # soft milky blue
+ramp_neb.color_ramp.elements[4].position = 1.0
+ramp_neb.color_ramp.elements[4].color    = (0.06, 0.08, 0.18, 1.0)   # brightest band
+
+# --- Combine all layers additively ---
+add1 = nt.nodes.new('ShaderNodeMixRGB')
+add1.location = (-400, 200)
+add1.blend_type = 'ADD'
+add1.inputs['Fac'].default_value = 1.0
+
+add2 = nt.nodes.new('ShaderNodeMixRGB')
+add2.location = (-200, 0)
+add2.blend_type = 'ADD'
+add2.inputs['Fac'].default_value = 1.0
+
+bg = nt.nodes.new('ShaderNodeBackground')
+bg.location = (50, 0)
+bg.inputs['Strength'].default_value = 2.5
+
+out = nt.nodes.new('ShaderNodeOutputWorld')
+out.location = (300, 0)
+
+# Wire: coord → mapping → all noise textures
+nt.links.new(tex_coord.outputs['Generated'], mapping.inputs['Vector'])
+nt.links.new(mapping.outputs['Vector'], noise_stars.inputs['Vector'])
+nt.links.new(mapping.outputs['Vector'], noise_stars2.inputs['Vector'])
+nt.links.new(mapping.outputs['Vector'], noise_neb.inputs['Vector'])
+
+nt.links.new(noise_stars.outputs['Fac'],  ramp_stars.inputs['Fac'])
+nt.links.new(noise_stars2.outputs['Fac'], ramp_stars2.inputs['Fac'])
+nt.links.new(noise_neb.outputs['Fac'],    ramp_neb.inputs['Fac'])
+
+# Stars + stars → add with nebula
+nt.links.new(ramp_stars.outputs['Color'],  add1.inputs['Color1'])
+nt.links.new(ramp_stars2.outputs['Color'], add1.inputs['Color2'])
+nt.links.new(add1.outputs['Color'],        add2.inputs['Color1'])
+nt.links.new(ramp_neb.outputs['Color'],    add2.inputs['Color2'])
+nt.links.new(add2.outputs['Color'],        bg.inputs['Color'])
+nt.links.new(bg.outputs['Background'],     out.inputs['Surface'])
+
+# ── LIGHTING ────────────────────────────────────────────────────────────────
+bpy.ops.object.light_add(type='POINT', location=(12, -8, 6))
+sun_light = bpy.context.active_object
+sun_light.name = 'SunLight'
+sun_light.data.energy           = 3000
+sun_light.data.color            = (1.0, 0.95, 0.85)
+sun_light.data.shadow_soft_size = 3.0
+
+bpy.ops.object.light_add(type='POINT', location=(-10, 8, -4))
+fill = bpy.context.active_object
+fill.name = 'FillLight'
+fill.data.energy = 200
+fill.data.color  = (0.4, 0.5, 1.0)
+
+# ── EARTH SPHERE ─────────────────────────────────────────────────────────────
+bpy.ops.mesh.primitive_uv_sphere_add(
+    radius=3.0, location=(0, 0, 0), segments=128, ring_count=64
+)
+earth = bpy.context.active_object
+earth.name = 'Earth'
+bpy.ops.object.shade_smooth()
+
+# ── EARTH MATERIAL ───────────────────────────────────────────────────────────
+earth_mat = bpy.data.materials.new(name='EarthMat')
+earth_mat.use_nodes = True
+nt2 = earth_mat.node_tree
+nt2.nodes.clear()
+
+coord = nt2.nodes.new('ShaderNodeTexCoord')
+coord.location = (-900, 0)
+
+ocean = nt2.nodes.new('ShaderNodeBsdfPrincipled')
+ocean.location = (-300, 150)
+ocean.inputs['Base Color'].default_value = (0.03, 0.18, 0.55, 1.0)
+ocean.inputs['Roughness'].default_value  = 0.15
+
+land = nt2.nodes.new('ShaderNodeBsdfPrincipled')
+land.location = (-300, -150)
+land.inputs['Base Color'].default_value = (0.12, 0.38, 0.10, 1.0)
+land.inputs['Roughness'].default_value  = 0.85
+
+noise = nt2.nodes.new('ShaderNodeTexNoise')
+noise.location = (-700, 0)
+noise.inputs['Scale'].default_value      = 3.5
+noise.inputs['Detail'].default_value     = 10.0
+noise.inputs['Roughness'].default_value  = 0.65
+noise.inputs['Distortion'].default_value = 0.4
+
+ramp = nt2.nodes.new('ShaderNodeValToRGB')
+ramp.location = (-500, 0)
+ramp.color_ramp.interpolation = 'CONSTANT'
+ramp.color_ramp.elements[0].position = 0.52
+ramp.color_ramp.elements[1].position = 0.53
+
+mix = nt2.nodes.new('ShaderNodeMixShader')
+mix.location = (0, 50)
+
+cloud_bsdf = nt2.nodes.new('ShaderNodeBsdfPrincipled')
+cloud_bsdf.location = (-300, -450)
+cloud_bsdf.inputs['Base Color'].default_value = (0.95, 0.97, 1.0, 1.0)
+cloud_bsdf.inputs['Roughness'].default_value  = 1.0
+cloud_bsdf.inputs['Alpha'].default_value      = 0.35
+
+cloud_noise = nt2.nodes.new('ShaderNodeTexNoise')
+cloud_noise.location = (-700, -400)
+cloud_noise.inputs['Scale'].default_value     = 6.0
+cloud_noise.inputs['Detail'].default_value    = 8.0
+cloud_noise.inputs['Roughness'].default_value = 0.5
+
+cloud_ramp = nt2.nodes.new('ShaderNodeValToRGB')
+cloud_ramp.location = (-500, -400)
+cloud_ramp.color_ramp.elements[0].position = 0.6
+cloud_ramp.color_ramp.elements[1].position = 0.75
+
+mix2 = nt2.nodes.new('ShaderNodeMixShader')
+mix2.location = (200, -100)
+
+out2 = nt2.nodes.new('ShaderNodeOutputMaterial')
+out2.location = (420, 0)
+
+nt2.links.new(coord.outputs['Generated'],  noise.inputs['Vector'])
+nt2.links.new(coord.outputs['Generated'],  cloud_noise.inputs['Vector'])
+nt2.links.new(noise.outputs['Fac'],        ramp.inputs['Fac'])
+nt2.links.new(ramp.outputs['Color'],       mix.inputs['Fac'])
+nt2.links.new(ocean.outputs['BSDF'],       mix.inputs[1])
+nt2.links.new(land.outputs['BSDF'],        mix.inputs[2])
+nt2.links.new(cloud_noise.outputs['Fac'],  cloud_ramp.inputs['Fac'])
+nt2.links.new(cloud_ramp.outputs['Color'], mix2.inputs['Fac'])
+nt2.links.new(mix.outputs['Shader'],       mix2.inputs[1])
+nt2.links.new(cloud_bsdf.outputs['BSDF'],  mix2.inputs['2'])
+nt2.links.new(mix2.outputs['Shader'],      out2.inputs['Surface'])
+
+earth.data.materials.append(earth_mat)
+
+# ── ATMOSPHERE ───────────────────────────────────────────────────────────────
+bpy.ops.mesh.primitive_uv_sphere_add(
+    radius=3.18, location=(0, 0, 0), segments=64, ring_count=32
+)
+atmo = bpy.context.active_object
+atmo.name = 'Atmosphere'
+bpy.ops.object.shade_smooth()
+atmo_mat = bpy.data.materials.new('AtmoMat')
+atmo_mat.use_nodes = True
+atmo_mat.blend_method = 'BLEND'
+ant = atmo_mat.node_tree
+ant.nodes.clear()
+a_bsdf = ant.nodes.new('ShaderNodeBsdfPrincipled')
+a_bsdf.inputs['Base Color'].default_value = (0.3, 0.6, 1.0, 1.0)
+a_bsdf.inputs['Alpha'].default_value      = 0.08
+a_bsdf.inputs['Roughness'].default_value  = 1.0
+a_out = ant.nodes.new('ShaderNodeOutputMaterial')
+a_out.location = (300, 0)
+ant.links.new(a_bsdf.outputs['BSDF'], a_out.inputs['Surface'])
+atmo.data.materials.append(atmo_mat)
+
+# ── AXIAL TILT + SPIN ANIMATION ──────────────────────────────────────────────
+earth.rotation_mode = 'XYZ'
+atmo.rotation_mode  = 'XYZ'
+earth.rotation_euler[2] = math.radians(23.5)
+atmo.rotation_euler[2]  = math.radians(23.5)
+
+for obj in [earth, atmo]:
+    obj.rotation_euler[1] = 0.0
+    obj.keyframe_insert(data_path='rotation_euler', frame=1)
+    obj.rotation_euler[1] = math.radians(360)
+    obj.keyframe_insert(data_path='rotation_euler', frame=481)
+
+# ── CAMERA ───────────────────────────────────────────────────────────────────
+bpy.ops.object.camera_add(location=(0, -14, 3))
+cam = bpy.context.active_object
+cam.name = 'EarthCamera'
+cam.rotation_euler = (math.radians(80), 0, 0)
+cam.data.lens = 50
+scene.camera = cam
+
+# ── FOREGROUND STAR MESHES (small, clean) ────────────────────────────────────
+star_mat = bpy.data.materials.new('StarMat')
+star_mat.use_nodes = True
+sm = star_mat.node_tree
+sm.nodes.clear()
+s_emit = sm.nodes.new('ShaderNodeEmission')
+s_emit.inputs['Color'].default_value    = (1.0, 1.0, 0.95, 1.0)
+s_emit.inputs['Strength'].default_value = 20.0
+s_out = sm.nodes.new('ShaderNodeOutputMaterial')
+s_out.location = (300, 0)
+sm.links.new(s_emit.outputs['Emission'], s_out.inputs['Surface'])
+
+random.seed(42)
+for i in range(40):
+    theta = random.uniform(0, 2 * math.pi)
+    phi   = math.acos(random.uniform(-1, 1))
+    r     = random.uniform(30, 45)
+    x = r * math.sin(phi) * math.cos(theta)
+    y = r * math.sin(phi) * math.sin(theta)
+    z = r * math.cos(phi)
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        radius=random.uniform(0.01, 0.05),  # tiny — no more blobs
+        location=(x, y, z),
+        segments=4,
+        ring_count=3
+    )
+    s = bpy.context.active_object
+    s.name = f'StarMesh_{i:03d}'
+    s.data.materials.append(star_mat)
+
+print("✅ Earth v3 ready! Switch to Material Preview (Z key) to see the space background.")</pre>
     </section>
   </main>
   <script src="script.js?v=205"></script>
