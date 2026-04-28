@@ -18,6 +18,7 @@
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="project-01.html">Project 01</a></li>
+          <li><a href="project-02.html">Project 02</a></li>
         </ul>
       </nav>
     </div>
@@ -26,7 +27,323 @@
     <h1>Mars</h1>
     <section class="f-card">
       <h2>Script</h2>
-      <pre class="result-box">Add your script for Mars here.</pre>
+      <pre class="result-box">"""
+╔══════════════════════════════════════════════════╗
+║         MARS — Blender 5.1 Python Script         ║
+╚══════════════════════════════════════════════════╝
+"""
+
+import bpy
+import math
+import random
+
+# ── RESET SCENE ─────────────────────────────────────────────────────────────
+bpy.ops.object.select_all(action='SELECT')
+bpy.ops.object.delete(use_global=False)
+for mat in bpy.data.materials:
+    bpy.data.materials.remove(mat)
+
+scene = bpy.context.scene
+scene.frame_start = 1
+scene.frame_end   = 480
+scene.render.fps  = 30
+bpy.context.preferences.edit.keyframe_new_interpolation_type = 'LINEAR'
+scene.render.engine = 'BLENDER_EEVEE'
+
+# ── WORLD BACKGROUND ────────────────────────────────────────────────────────
+world = bpy.data.worlds['World']
+world.use_nodes = True
+nt = world.node_tree
+nt.nodes.clear()
+
+tex_coord = nt.nodes.new('ShaderNodeTexCoord')
+mapping = nt.nodes.new('ShaderNodeMapping')
+mapping.inputs['Rotation'].default_value = (0.5, 0.3, 0.😎
+
+noise_stars = nt.nodes.new('ShaderNodeTexNoise')
+noise_stars.inputs['Scale'].default_value      = 600.0
+noise_stars.inputs['Detail'].default_value     = 2.0
+noise_stars.inputs['Roughness'].default_value  = 1.0
+noise_stars.inputs['Distortion'].default_value = 0.0
+
+ramp_stars = nt.nodes.new('ShaderNodeValToRGB')
+ramp_stars.color_ramp.interpolation = 'CONSTANT'
+ramp_stars.color_ramp.elements[0].position = 0.96
+ramp_stars.color_ramp.elements[0].color    = (0.0, 0.0, 0.0, 1.0)
+ramp_stars.color_ramp.elements[1].position = 0.97
+ramp_stars.color_ramp.elements[1].color    = (1.0, 1.0, 1.0, 1.0)
+
+noise_stars2 = nt.nodes.new('ShaderNodeTexNoise')
+noise_stars2.inputs['Scale'].default_value      = 300.0
+noise_stars2.inputs['Detail'].default_value     = 2.0
+noise_stars2.inputs['Roughness'].default_value  = 1.0
+noise_stars2.inputs['Distortion'].default_value = 0.0
+
+ramp_stars2 = nt.nodes.new('ShaderNodeValToRGB')
+ramp_stars2.color_ramp.interpolation = 'CONSTANT'
+ramp_stars2.color_ramp.elements[0].position = 0.97
+ramp_stars2.color_ramp.elements[0].color    = (0.0, 0.0, 0.0, 1.0)
+ramp_stars2.color_ramp.elements[1].position = 0.975
+ramp_stars2.color_ramp.elements[1].color    = (0.9, 0.95, 1.0, 1.0)
+
+noise_neb = nt.nodes.new('ShaderNodeTexNoise')
+noise_neb.inputs['Scale'].default_value      = 1.5
+noise_neb.inputs['Detail'].default_value     = 16.0
+noise_neb.inputs['Roughness'].default_value  = 0.7
+noise_neb.inputs['Distortion'].default_value = 2.0
+
+ramp_neb = nt.nodes.new('ShaderNodeValToRGB')
+ramp_neb.color_ramp.interpolation = 'LINEAR'
+ramp_neb.color_ramp.elements[0].position = 0.0
+ramp_neb.color_ramp.elements[0].color    = (0.0, 0.0, 0.0, 1.0)
+ramp_neb.color_ramp.elements.new(0.45)
+ramp_neb.color_ramp.elements[1].color    = (0.0, 0.0, 0.0, 1.0)
+ramp_neb.color_ramp.elements.new(0.65)
+ramp_neb.color_ramp.elements[2].color    = (0.01, 0.02, 0.06, 1.0)
+ramp_neb.color_ramp.elements.new(0.😎
+ramp_neb.color_ramp.elements[3].color    = (0.03, 0.05, 0.12, 1.0)
+ramp_neb.color_ramp.elements[4].position = 1.0
+ramp_neb.color_ramp.elements[4].color    = (0.06, 0.08, 0.18, 1.0)
+
+add1 = nt.nodes.new('ShaderNodeMixRGB')
+add1.blend_type = 'ADD'
+add1.inputs['Fac'].default_value = 1.0
+add2 = nt.nodes.new('ShaderNodeMixRGB')
+add2.blend_type = 'ADD'
+add2.inputs['Fac'].default_value = 1.0
+bg = nt.nodes.new('ShaderNodeBackground')
+bg.inputs['Strength'].default_value = 2.5
+out = nt.nodes.new('ShaderNodeOutputWorld')
+
+nt.links.new(tex_coord.outputs['Generated'], mapping.inputs['Vector'])
+nt.links.new(mapping.outputs['Vector'], noise_stars.inputs['Vector'])
+nt.links.new(mapping.outputs['Vector'], noise_stars2.inputs['Vector'])
+nt.links.new(mapping.outputs['Vector'], noise_neb.inputs['Vector'])
+nt.links.new(noise_stars.outputs['Fac'],   ramp_stars.inputs['Fac'])
+nt.links.new(noise_stars2.outputs['Fac'],  ramp_stars2.inputs['Fac'])
+nt.links.new(noise_neb.outputs['Fac'],     ramp_neb.inputs['Fac'])
+nt.links.new(ramp_stars.outputs['Color'],  add1.inputs['Color1'])
+nt.links.new(ramp_stars2.outputs['Color'], add1.inputs['Color2'])
+nt.links.new(add1.outputs['Color'],        add2.inputs['Color1'])
+nt.links.new(ramp_neb.outputs['Color'],    add2.inputs['Color2'])
+nt.links.new(add2.outputs['Color'],        bg.inputs['Color'])
+nt.links.new(bg.outputs['Background'],     out.inputs['Surface'])
+
+# ── LIGHTING ────────────────────────────────────────────────────────────────
+bpy.ops.object.light_add(type='POINT', location=(12, -8, 6))
+sun = bpy.context.active_object
+sun.name = 'SunLight'
+sun.data.energy           = 3000
+sun.data.color            = (1.0, 0.92, 0.80)
+sun.data.shadow_soft_size = 3.0
+
+bpy.ops.object.light_add(type='POINT', location=(-10, 8, -4))
+fill = bpy.context.active_object
+fill.name = 'FillLight'
+fill.data.energy = 150
+fill.data.color  = (0.5, 0.3, 0.2)  # warm reddish fill for Mars mood
+
+# ── MARS SPHERE ──────────────────────────────────────────────────────────────
+bpy.ops.mesh.primitive_uv_sphere_add(
+    radius=3.0, location=(0, 0, 0), segments=128, ring_count=64
+)
+mars = bpy.context.active_object
+mars.name = 'Mars'
+bpy.ops.object.shade_smooth()
+
+# ── MARS MATERIAL ────────────────────────────────────────────────────────────
+mars_mat = bpy.data.materials.new('MarsMat')
+mars_mat.use_nodes = True
+mn = mars_mat.node_tree
+mn.nodes.clear()
+
+m_coord = mn.nodes.new('ShaderNodeTexCoord')
+
+# Use Object coordinates — wraps properly around the sphere
+m_mapping = mn.nodes.new('ShaderNodeMapping')
+m_mapping.inputs['Scale'].default_value = (1.0, 1.0, 1.0)
+
+# Layer 1 — large terrain base (rust/orange regions)
+m_noise1 = mn.nodes.new('ShaderNodeTexNoise')
+m_noise1.inputs['Scale'].default_value      = 2.5
+m_noise1.inputs['Detail'].default_value     = 14.0
+m_noise1.inputs['Roughness'].default_value  = 0.65
+m_noise1.inputs['Distortion'].default_value = 0.6
+
+m_ramp1 = mn.nodes.new('ShaderNodeValToRGB')
+m_ramp1.color_ramp.interpolation = 'LINEAR'
+m_ramp1.color_ramp.elements[0].position = 0.0
+m_ramp1.color_ramp.elements[0].color    = (0.30, 0.07, 0.02, 1.0)  # dark rust
+m_ramp1.color_ramp.elements.new(0.25)
+m_ramp1.color_ramp.elements[1].color    = (0.52, 0.15, 0.05, 1.0)  # medium rust
+m_ramp1.color_ramp.elements.new(0.5)
+m_ramp1.color_ramp.elements[2].color    = (0.70, 0.28, 0.08, 1.0)  # orange-red
+m_ramp1.color_ramp.elements.new(0.75)
+m_ramp1.color_ramp.elements[3].color    = (0.78, 0.42, 0.18, 1.0)  # dusty orange
+m_ramp1.color_ramp.elements[4].position = 1.0
+m_ramp1.color_ramp.elements[4].color    = (0.65, 0.35, 0.15, 1.0)  # tan
+
+# Layer 2 — fine surface detail
+m_noise2 = mn.nodes.new('ShaderNodeTexNoise')
+m_noise2.inputs['Scale'].default_value      = 8.0
+m_noise2.inputs['Detail'].default_value     = 12.0
+m_noise2.inputs['Roughness'].default_value  = 0.80
+m_noise2.inputs['Distortion'].default_value = 0.3
+
+m_ramp2 = mn.nodes.new('ShaderNodeValToRGB')
+m_ramp2.color_ramp.interpolation = 'LINEAR'
+m_ramp2.color_ramp.elements[0].position = 0.0
+m_ramp2.color_ramp.elements[0].color    = (0.18, 0.04, 0.01, 1.0)  # dark crater shadow
+m_ramp2.color_ramp.elements[1].position = 1.0
+m_ramp2.color_ramp.elements[1].color    = (0.72, 0.40, 0.18, 1.0)  # bright dust
+
+# Mix both terrain layers
+m_mix_terrain = mn.nodes.new('ShaderNodeMixRGB')
+m_mix_terrain.blend_type = 'MIX'
+m_mix_terrain.inputs['Fac'].default_value = 0.45
+
+# Layer 3 — highlands (slightly brighter patches)
+m_noise3 = mn.nodes.new('ShaderNodeTexNoise')
+m_noise3.inputs['Scale'].default_value      = 1.8
+m_noise3.inputs['Detail'].default_value     = 6.0
+m_noise3.inputs['Roughness'].default_value  = 0.5
+m_noise3.inputs['Distortion'].default_value = 0.8
+
+m_ramp3 = mn.nodes.new('ShaderNodeValToRGB')
+m_ramp3.color_ramp.interpolation = 'LINEAR'
+m_ramp3.color_ramp.elements[0].position = 0.0
+m_ramp3.color_ramp.elements[0].color    = (0.35, 0.10, 0.03, 1.0)
+m_ramp3.color_ramp.elements[1].position = 1.0
+m_ramp3.color_ramp.elements[1].color    = (0.82, 0.50, 0.25, 1.0)  # pale highland dust
+
+m_mix_highlands = mn.nodes.new('ShaderNodeMixRGB')
+m_mix_highlands.blend_type = 'OVERLAY'
+m_mix_highlands.inputs['Fac'].default_value = 0.3
+
+# Fix: normalize Z by dividing by sphere radius before the ice ramp
+m_geo = mn.nodes.new('ShaderNodeNewGeometry')
+m_sep = mn.nodes.new('ShaderNodeSeparateXYZ')
+
+m_abs = mn.nodes.new('ShaderNodeMath')
+m_abs.operation = 'ABSOLUTE'
+
+# Divide by radius (3.0) to get 0..1 range
+m_divide = mn.nodes.new('ShaderNodeMath')
+m_divide.operation = 'DIVIDE'
+m_divide.inputs[1].default_value = 3.0
+
+m_ramp_ice = mn.nodes.new('ShaderNodeValToRGB')
+m_ramp_ice.color_ramp.interpolation = 'EASE'
+m_ramp_ice.color_ramp.elements[0].position = 0.82   # ice starts near poles only
+m_ramp_ice.color_ramp.elements[0].color    = (0.0, 0.0, 0.0, 1.0)
+m_ramp_ice.color_ramp.elements[1].position = 0.97   # fully white at very tip
+m_ramp_ice.color_ramp.elements[1].color    = (1.0, 1.0, 1.0, 1.0)
+
+m_bsdf_terrain = mn.nodes.new('ShaderNodeBsdfPrincipled')
+m_bsdf_terrain.inputs['Roughness'].default_value = 0.92
+
+m_bsdf_ice = mn.nodes.new('ShaderNodeBsdfPrincipled')
+m_bsdf_ice.inputs['Base Color'].default_value = (0.88, 0.92, 0.95, 1.0)
+m_bsdf_ice.inputs['Roughness'].default_value  = 0.25
+
+m_mix_shader = mn.nodes.new('ShaderNodeMixShader')
+m_out = mn.nodes.new('ShaderNodeOutputMaterial')
+
+# Wire terrain colors
+mn.links.new(m_coord.outputs['Object'],   m_mapping.inputs['Vector'])
+mn.links.new(m_mapping.outputs['Vector'], m_noise1.inputs['Vector'])
+mn.links.new(m_mapping.outputs['Vector'], m_noise2.inputs['Vector'])
+mn.links.new(m_mapping.outputs['Vector'], m_noise3.inputs['Vector'])
+
+mn.links.new(m_noise1.outputs['Fac'], m_ramp1.inputs['Fac'])
+mn.links.new(m_noise2.outputs['Fac'], m_ramp2.inputs['Fac'])
+mn.links.new(m_noise3.outputs['Fac'], m_ramp3.inputs['Fac'])
+
+mn.links.new(m_ramp1.outputs['Color'], m_mix_terrain.inputs['Color1'])
+mn.links.new(m_ramp2.outputs['Color'], m_mix_terrain.inputs['Color2'])
+mn.links.new(m_mix_terrain.outputs['Color'], m_mix_highlands.inputs['Color1'])
+mn.links.new(m_ramp3.outputs['Color'],       m_mix_highlands.inputs['Color2'])
+mn.links.new(m_mix_highlands.outputs['Color'], m_bsdf_terrain.inputs['Base Color'])
+
+# Wire ice caps with normalized Z
+mn.links.new(m_geo.outputs['Position'], m_sep.inputs['Vector'])
+mn.links.new(m_sep.outputs['Z'],        m_abs.inputs[0])
+mn.links.new(m_abs.outputs['Value'],    m_divide.inputs[0])
+mn.links.new(m_divide.outputs['Value'], m_ramp_ice.inputs['Fac'])
+
+mn.links.new(m_ramp_ice.outputs['Color'],    m_mix_shader.inputs['Fac'])
+mn.links.new(m_bsdf_terrain.outputs['BSDF'], m_mix_shader.inputs[1])
+mn.links.new(m_bsdf_ice.outputs['BSDF'],     m_mix_shader.inputs[2])
+mn.links.new(m_mix_shader.outputs['Shader'], m_out.inputs['Surface'])
+
+mars.data.materials.append(mars_mat)
+# ── MARS ATMOSPHERE (thin dusty orange haze) ─────────────────────────────────
+bpy.ops.mesh.primitive_uv_sphere_add(
+    radius=3.10, location=(0, 0, 0), segments=64, ring_count=32
+)
+atmo = bpy.context.active_object
+atmo.name = 'MarsAtmosphere'
+bpy.ops.object.shade_smooth()
+atmo_mat = bpy.data.materials.new('MarsAtmoMat')
+atmo_mat.use_nodes = True
+atmo_mat.blend_method = 'BLEND'
+an = atmo_mat.node_tree
+an.nodes.clear()
+a_bsdf = an.nodes.new('ShaderNodeBsdfPrincipled')
+a_bsdf.inputs['Base Color'].default_value = (0.85, 0.38, 0.12, 1.0)
+a_bsdf.inputs['Alpha'].default_value      = 0.05
+a_bsdf.inputs['Roughness'].default_value  = 1.0
+a_out = an.nodes.new('ShaderNodeOutputMaterial')
+an.links.new(a_bsdf.outputs['BSDF'], a_out.inputs['Surface'])
+atmo.data.materials.append(atmo_mat)
+
+# ── SPIN ANIMATION ───────────────────────────────────────────────────────────
+mars.rotation_mode = atmo.rotation_mode = 'XYZ'
+mars.rotation_euler[2] = atmo.rotation_euler[2] = math.radians(25.2)
+
+for obj in [mars, atmo]:
+    obj.rotation_euler[1] = 0.0
+    obj.keyframe_insert(data_path='rotation_euler', frame=1)
+    obj.rotation_euler[1] = math.radians(360)
+    obj.keyframe_insert(data_path='rotation_euler', frame=481)
+
+# ── CAMERA ───────────────────────────────────────────────────────────────────
+bpy.ops.object.camera_add(location=(0, -12, 2))
+cam = bpy.context.active_object
+cam.name = 'MarsCamera'
+cam.rotation_euler = (math.radians(80), 0, 0)
+cam.data.lens = 50
+scene.camera = cam
+
+# ── STAR MESHES ──────────────────────────────────────────────────────────────
+star_mat = bpy.data.materials.new('StarMat')
+star_mat.use_nodes = True
+sm = star_mat.node_tree
+sm.nodes.clear()
+s_emit = sm.nodes.new('ShaderNodeEmission')
+s_emit.inputs['Color'].default_value    = (1.0, 1.0, 0.95, 1.0)
+s_emit.inputs['Strength'].default_value = 20.0
+s_out = sm.nodes.new('ShaderNodeOutputMaterial')
+sm.links.new(s_emit.outputs['Emission'], s_out.inputs['Surface'])
+
+random.seed(99)
+for i in range(40):
+    theta = random.uniform(0, 2 * math.pi)
+    phi   = math.acos(random.uniform(-1, 1))
+    r     = random.uniform(30, 45)
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        radius=random.uniform(0.01, 0.05),
+        location=(
+            r * math.sin(phi) * math.cos(theta),
+            r * math.sin(phi) * math.sin(theta),
+            r * math.cos(phi)
+        ),
+        segments=4, ring_count=3
+    )
+    bpy.context.active_object.name = f'Star_{i:03d}'
+    bpy.context.active_object.data.materials.append(star_mat)
+
+print("✅ Mars ready! Press Z → Material Preview to see space background.")</pre>
     </section>
   </main>
   <script src="script.js?v=205"></script>
