@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 const currentPath = window.location.pathname.replace(/\\/g, "/");
 const isProjectPage = currentPath.includes("/blender/") || currentPath.includes("/rotoscope/");
 const isDirectVisit = !document.referrer || !document.referrer.includes(window.location.host);
