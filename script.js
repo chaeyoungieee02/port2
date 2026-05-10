@@ -74,23 +74,23 @@ if (ageInput && summaryAge && selectedPlanetName && yearsValue && weeksValue && 
     { name: "Pluto", period: 248 },
   ];
 
-  function updatePlanetCards(earthAge) {
+  const updatePlanetCards = (earthAge) => {
     planets.forEach((planet) => {
       const element = planetValues[planet.name];
       if (!element) return;
       const planetYears = earthAge / planet.period;
       element.textContent = planetYears.toFixed(2);
     });
-  }
+  };
 
-  function updateSelectedOutput(planetName, planetYears) {
+  const updateSelectedOutput = (planetName, planetYears) => {
     selectedPlanetName.textContent = planetName;
     yearsValue.textContent = planetYears.toFixed(2);
     weeksValue.textContent = Math.round(planetYears * 52.1786);
     daysValue.textContent = Math.round(planetYears * 365.25);
-  }
+  };
 
-  function calculateAge() {
+  const calculateAge = () => {
     const earthAge = parseFloat(ageInput.value);
     if (Number.isNaN(earthAge) || earthAge < 0) {
       selectedPlanetName.textContent = "Earth";
@@ -104,7 +104,7 @@ if (ageInput && summaryAge && selectedPlanetName && yearsValue && weeksValue && 
     updatePlanetCards(earthAge);
     const planetYears = earthAge / 1;
     updateSelectedOutput("Earth", planetYears);
-  }
+  };
 
   ageInput.addEventListener("input", () => {
     if (ageInput.value !== "") calculateAge();
