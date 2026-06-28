@@ -753,6 +753,9 @@ body {
 .video-card p.planet-video-note {
   margin: 0;
 }
+.video-card .blend-download-btn {
+  margin-top: .75rem;
+}
 .video-frame {
   position: relative;
   width: 100%;
